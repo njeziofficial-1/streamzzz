@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StremoCloud.Domain", "StremoCloud.Domain\StremoCloud.Domain.csproj", "{A0CB544D-FC7D-4B43-A464-1287A00D6CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StremoCloud.Infrastructure", "StremoCloud.Infrastructure\StremoCloud.Infrastructure.csproj", "{1911424E-D0CE-48BB-8DF9-D3720E905614}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StremoCloud.Application", "StremoCloud.Application\StremoCloud.Application.csproj", "{B4FE9577-389C-4FC9-9A79-B42D68DFF3DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StremoCloud.Shared", "StremoCloud.Shared\StremoCloud.Shared.csproj", "{531939E6-5462-4A77-B353-C7CC6E04E240}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StremoCloud.Presentation", "StremoCloud.Presentation\StremoCloud.Presentation.csproj", "{866CCCD8-9CD7-458F-9355-876E681F0B77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{4D1D2271-498B-4203-B3B0-6E0B3C3D6C85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1B1E5E74-23DB-45EF-A095-4EB8256FFD1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{1C1D8ADC-157B-4E2F-BB68-F240FC6279ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A7A6EF25-7EE7-4DD2-9FE3-D6EA2D0BC96A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{9B17F738-6475-44FD-8355-500695EDD949}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0CB544D-FC7D-4B43-A464-1287A00D6CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0CB544D-FC7D-4B43-A464-1287A00D6CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0CB544D-FC7D-4B43-A464-1287A00D6CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0CB544D-FC7D-4B43-A464-1287A00D6CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1911424E-D0CE-48BB-8DF9-D3720E905614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1911424E-D0CE-48BB-8DF9-D3720E905614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1911424E-D0CE-48BB-8DF9-D3720E905614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1911424E-D0CE-48BB-8DF9-D3720E905614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4FE9577-389C-4FC9-9A79-B42D68DFF3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4FE9577-389C-4FC9-9A79-B42D68DFF3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4FE9577-389C-4FC9-9A79-B42D68DFF3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4FE9577-389C-4FC9-9A79-B42D68DFF3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{531939E6-5462-4A77-B353-C7CC6E04E240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{531939E6-5462-4A77-B353-C7CC6E04E240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{531939E6-5462-4A77-B353-C7CC6E04E240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{531939E6-5462-4A77-B353-C7CC6E04E240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{866CCCD8-9CD7-458F-9355-876E681F0B77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{866CCCD8-9CD7-458F-9355-876E681F0B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{866CCCD8-9CD7-458F-9355-876E681F0B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{866CCCD8-9CD7-458F-9355-876E681F0B77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A0CB544D-FC7D-4B43-A464-1287A00D6CBF} = {4D1D2271-498B-4203-B3B0-6E0B3C3D6C85}
+		{1911424E-D0CE-48BB-8DF9-D3720E905614} = {1B1E5E74-23DB-45EF-A095-4EB8256FFD1F}
+		{B4FE9577-389C-4FC9-9A79-B42D68DFF3DB} = {1C1D8ADC-157B-4E2F-BB68-F240FC6279ED}
+		{531939E6-5462-4A77-B353-C7CC6E04E240} = {9B17F738-6475-44FD-8355-500695EDD949}
+		{866CCCD8-9CD7-458F-9355-876E681F0B77} = {A7A6EF25-7EE7-4DD2-9FE3-D6EA2D0BC96A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4400B36-C904-4152-9CDE-C622D71EC505}
+	EndGlobalSection
+EndGlobal

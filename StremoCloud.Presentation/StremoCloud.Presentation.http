@@ -1,0 +1,6 @@
+@StremoCloud.Presentation_HostAddress = http://localhost:5221
+
+GET {{StremoCloud.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

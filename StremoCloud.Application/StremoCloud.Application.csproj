@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Command\Delete\" />
+    <Folder Include="Features\Command\GetAll\" />
+    <Folder Include="Features\Command\Update\" />
+    <Folder Include="Features\Handler\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StremoCloud.Domain\StremoCloud.Domain.csproj" />
+    <ProjectReference Include="..\StremoCloud.Infrastructure\StremoCloud.Infrastructure.csproj" />
+    <ProjectReference Include="..\StremoCloud.Shared\StremoCloud.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
