@@ -11,14 +11,14 @@ public class ValidateOtpCommandValidator : AbstractValidator<ValidateOtpCommand>
     {
         _otpService = otpService;
 
-        RuleFor(x => x.Identifier)
+        RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Identifier is required.")
             .Must(_otpService.IsValidEmail).WithMessage("Invalid identifier format.");
 
         RuleFor(x => x.Otp)
             .NotEmpty().WithMessage("OTP is required.")
             .Length(6).WithMessage("OTP must be 6 digits.")
-            .Must((cmd, otp) => _otpService.IsOtpValid(cmd.Identifier, otp))
+            .Must((cmd, otp) => _otpService.IsOtpValid(cmd.Email, otp))
             .WithMessage("Invalid or expired OTP.");
     }
 }
