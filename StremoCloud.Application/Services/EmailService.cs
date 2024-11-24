@@ -8,7 +8,7 @@ public class EmailService(IConfiguration configuration) : IEmailService
 {
     public async Task<bool> SendToEmailAsync(string toEmail, string message, string fullName, string subject)
     {
-        string fromEmail = configuration["EmailSettings:FromEmail"];
+        string fromEmail = configuration["EremailSettings:FromEmail"];
         string username = configuration["EmailSettings:Username"];
         string password = configuration["EmailSettings:Password"];
         string server = configuration["EmailSettings:Server"];

@@ -13,7 +13,7 @@ public class ValidateOtpCommandValidator : AbstractValidator<ValidateOtpCommand>
 
         RuleFor(x => x.Identifier)
             .NotEmpty().WithMessage("Identifier is required.")
-            .Must(_otpService.IsValidIdentifier).WithMessage("Invalid identifier format.");
+            .Must(_otpService.IsValidEmail).WithMessage("Invalid identifier format.");
 
         RuleFor(x => x.Otp)
             .NotEmpty().WithMessage("OTP is required.")

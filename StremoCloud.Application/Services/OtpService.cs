@@ -23,29 +23,29 @@ public class OtpService : IOtpService
         return otp;
     }
 
-    public bool IsValidIdentifier(string identifier)
+    public bool IsValidEmail(string email)
     {
         // Basic validation: Identifier should be a valid email or phone number
-        return !string.IsNullOrWhiteSpace(identifier) &&
-               (identifier.Contains("@") || long.TryParse(identifier, out _));
+        return !string.IsNullOrWhiteSpace(email) &&
+               (email.Contains("@") || long.TryParse(email, out _));
     }
 
-    public bool ValidateOtp(string identifier, string otp)
+    public bool ValidateOtp(string email, string otp)
     {
-        if (_otpStore.TryGetValue(identifier, out var record))
+        if (_otpStore.TryGetValue(email, out var record))
         {
             if (record.Otp == otp && record.Expiry > DateTime.UtcNow)
             {
-                _otpStore.Remove(identifier); // Invalidate OTP after use
+                _otpStore.Remove(email); // Invalidate OTP after use
                 return true;
             }
         }
         return false;
     }
 
-    public bool IsOtpValid(string identifier, string otp)
+    public bool IsOtpValid(string email, string otp)
     {
-        if (_otpStore.TryGetValue(identifier, out var record))
+        if (_otpStore.TryGetValue(email, out var record))
         {
             return record.Otp == otp && record.Expiry > DateTime.UtcNow;
         }
