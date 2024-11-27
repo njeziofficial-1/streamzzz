@@ -14,6 +14,6 @@ public class ValidateOtpCommandHandler : IRequestHandler<ValidateOtpCommand, boo
 
     public async Task<bool> Handle(ValidateOtpCommand request, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(_otpService.ValidateOtp(request.Identifier, request.Otp));
+        return await Task.FromResult(_otpService.ValidateOtp(request.Email, request.Otp));
     }
 }

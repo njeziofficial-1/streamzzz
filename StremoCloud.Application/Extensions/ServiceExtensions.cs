@@ -22,6 +22,7 @@ public static class ServiceExtensions
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ISecurityHelper, SecurityHelper>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<ITokenHelper, TokenHelper>();
 
         services.AddValidatorsFromAssemblyContaining<ValidateOtpCommandValidator>();
         services.AddScoped<IOtpService, OtpService>();
