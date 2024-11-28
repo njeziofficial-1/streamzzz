@@ -8,6 +8,7 @@ using StremoCloud.Application.Services;
 using StremoCloud.Shared.Helpers;
 using StremoCloud.Application.Features.Command.Create;
 using StremoCloud.Domain.Interface;
+using StremoCloud.Infrastructure.Data.UnitOfWork;
 
 namespace StremoCloud.Application.Extensions;
 
@@ -23,6 +24,7 @@ public static class ServiceExtensions
         services.AddScoped<ISecurityHelper, SecurityHelper>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<ITokenHelper, TokenHelper>();
+        services.AddScoped<IStremoUnitOfWork, StremoUnitOfWork>();
 
         services.AddValidatorsFromAssemblyContaining<ValidateOtpCommandValidator>();
         services.AddScoped<IOtpService, OtpService>();

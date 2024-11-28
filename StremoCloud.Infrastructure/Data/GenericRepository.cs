@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using StremoCloud.Domain.Common;
 
 namespace StremoCloud.Infrastructure.Data;
 
@@ -21,6 +23,11 @@ public class GenericRepository<T> : IGenericRepository<T>
     public async Task<T> GetByIdAsync(string id)
     {
         return await _collection.Find(Builders<T>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
+    }
+
+    public IQueryable<T> AsQueryable()
+    {
+        return _collection.AsQueryable();
     }
 
     public async Task<bool> DeleteAsync(string id)

@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using StremoCloud.Domain.Entities;
 using StremoCloud.Infrastructure.Data;
+using StremoCloud.Infrastructure.Data.UnitOfWork;
 using StremoCloud.Shared.Helpers;
 using StremoCloud.Shared.Response;
 
@@ -16,12 +18,12 @@ public class SignUpCommand : IRequest<GenericResponse<string>>
     public string Address { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
 }
-public class SignUpCommandHandler(IGenericRepository<SignUp> repository)
+public class SignUpCommandHandler(IStremoUnitOfWork unitOfWork)
     : IRequestHandler<SignUpCommand, GenericResponse<string>>
 {
     public async Task<GenericResponse<string>> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
-        var existingUser = await repository.GetByEmailAsync(request.Email);
+        var existingUser = await unitOfWork.Repository<SignUpCommand>().AsQueryable().Where(x => x.Email.ToLower() == request.Email.ToLower()).FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         string message;
         if (existingUser != null)
@@ -44,7 +46,7 @@ public class SignUpCommandHandler(IGenericRepository<SignUp> repository)
             Address = request.Address,
             Password = request.Password.GenerateHash()
         };
-        await repository.CreateAsync(newUser);
+        await unitOfWork.Repository<SignUp>().CreateAsync(newUser);
 
         message = "User created successfully.";
         return new GenericResponse<string>
