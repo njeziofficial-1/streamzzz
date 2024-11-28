@@ -33,8 +33,4 @@
     <ProjectReference Include="..\StremoCloud.Shared\StremoCloud.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Queries\" />
-  </ItemGroup>
-
 </Project>

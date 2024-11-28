@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StremoCloud.Application.Features.Command.Create;
+using StremoCloud.Application.Features.Queries;
 
 namespace StremoCloud.Presentation.Controllers;
 
@@ -29,4 +30,8 @@ public class UserController(IMediator mediator) : ControllerBase
         var response = await mediator.Send(command);
         return Ok(response);
     }
+
+    [HttpGet("get-all-users")]
+    public async Task<IActionResult> GetUsers()
+        => Ok(await mediator.Send(new GetUserQuery()));
 }

@@ -29,6 +29,11 @@ public class GenericRepository<T> : IGenericRepository<T>
     {
         return _collection.AsQueryable();
     }
+    public List<T> GetList()
+        =>  _collection.AsQueryable().ToList();
+
+    public List<T> GetList(Func<T, bool> predicate)
+       => _collection.AsQueryable().Where(predicate).ToList();
 
     public async Task<bool> DeleteAsync(string id)
     {

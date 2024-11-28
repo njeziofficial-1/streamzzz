@@ -10,4 +10,6 @@ public interface IGenericRepository<T>
     Task<T> GetByEmailAsync(string email);
     Task<bool> UpdateAsync(string id, T entity);
     IQueryable<T> AsQueryable();
+    List<T> GetList();
+    List<T> GetList(Func<T, bool> predicate);
 }
