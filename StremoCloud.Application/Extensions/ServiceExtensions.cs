@@ -29,7 +29,7 @@ public static class ServiceExtensions
         {
             var client = new MongoClient(configuration["MongoDbOptions:ConnectionString"]);
             var database = client.GetDatabase(configuration["MongoDbOptions:DatabaseName"]);
-            return new DataContext(configuration, database);
+            return new DataContext(database);
         });
 
         services.AddScoped<IStremoUnitOfWork, StremoUnitOfWork>();

@@ -5,7 +5,8 @@ namespace StremoCloud.Infrastructure.Data;
 public class DataContext : IDataContext
 {
     private readonly IMongoDatabase _database;
-    public DataContext(IConfiguration configuration, IMongoDatabase database)
+    //public DataContext(IConfiguration configuration, IMongoDatabase database)
+    public DataContext(IMongoDatabase database)
     {
         _database = database;
         /*

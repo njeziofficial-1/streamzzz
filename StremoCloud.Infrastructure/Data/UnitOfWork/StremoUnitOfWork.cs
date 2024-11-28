@@ -8,9 +8,9 @@ namespace StremoCloud.Infrastructure.Data.UnitOfWork;
 
 public class StremoUnitOfWork : IStremoUnitOfWork
 {
-    DataContext _dataContext;
+    IDataContext _dataContext;
 
-    public StremoUnitOfWork(DataContext dataContext)
+    public StremoUnitOfWork(IDataContext dataContext)
     {
         _dataContext = dataContext;
     }

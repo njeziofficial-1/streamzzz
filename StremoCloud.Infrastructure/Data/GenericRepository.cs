@@ -2,15 +2,18 @@
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using StremoCloud.Domain.Common;
+using System;
+using System.Linq.Expressions;
 
 namespace StremoCloud.Infrastructure.Data;
 
 public class GenericRepository<T> : IGenericRepository<T>
 {
     private readonly IMongoCollection<T> _collection;
-
+    IDataContext _context;
     public GenericRepository(IDataContext context)
     {
+        _context = context;
         _collection = context.GetCollection<T>(typeof(T).Name);
     }
 
@@ -25,15 +28,15 @@ public class GenericRepository<T> : IGenericRepository<T>
         return await _collection.Find(Builders<T>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
     }
 
-    public IQueryable<T> AsQueryable()
+    public IEnumerable<T> AsQueryable()
     {
-        return _collection.AsQueryable();
+        return _context.GetCollection<T>(typeof(T).Name).Find(_ => true).ToEnumerable();
     }
     public List<T> GetList()
-        =>  _collection.AsQueryable().ToList();
+    => _context.GetCollection<T>(typeof(T).Name).Find(_ => true).ToList();
 
-    public List<T> GetList(Func<T, bool> predicate)
-       => _collection.AsQueryable().Where(predicate).ToList();
+    public List<T> GetList(Expression<Func<T, bool>> predicate)
+       => _context.GetCollection<T>(typeof(T).Name).Find(predicate).ToList();
 
     public async Task<bool> DeleteAsync(string id)
     {
@@ -56,4 +59,11 @@ public class GenericRepository<T> : IGenericRepository<T>
     {
         return await _collection.Find(Builders<T>.Filter.Eq("Email", email)).FirstOrDefaultAsync();
     }
+
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+    {
+        var collection = _context.GetCollection<T>(typeof(T).Name); // Get the collection
+        return await collection.Find(predicate).FirstOrDefaultAsync();
+    }
+
 }

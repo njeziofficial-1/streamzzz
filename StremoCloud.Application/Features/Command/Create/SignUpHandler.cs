@@ -23,7 +23,7 @@ public class SignUpCommandHandler(IStremoUnitOfWork unitOfWork)
 {
     public async Task<GenericResponse<string>> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
-        var existingUser = await unitOfWork.Repository<SignUpCommand>().AsQueryable().Where(x => x.Email.ToLower() == request.Email.ToLower()).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        var existingUser = await unitOfWork.Repository<SignUpCommand>().FirstOrDefaultAsync(x => x.Email.ToLower() == request.Email.ToLower());
 
         string message;
         if (existingUser != null)
