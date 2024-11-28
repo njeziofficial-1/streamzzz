@@ -22,9 +22,9 @@ public class ForgotPasswordCommandHandler (IEmailService emailService, IGenericR
         {
             var uniqueString = $"{StringHelper.GenerateRandomString(6)}|{user.Email}";
             var token = securityHelper.Encrypt(uniqueString);
-            var verification = new Verification
-            {
-                Token = token,
+            var verification = new Verification 
+            { 
+                Token = token, 
                 UserId = user.Id
             };
             await verificationRepository.CreateAsync(verification);
