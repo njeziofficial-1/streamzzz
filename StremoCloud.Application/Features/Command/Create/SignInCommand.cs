@@ -3,6 +3,7 @@ using System.Security.Claims;
 using MediatR;
 using StremoCloud.Domain.Entities;
 using StremoCloud.Infrastructure.Data;
+using StremoCloud.Infrastructure.Data.UnitOfWork;
 using StremoCloud.Shared.Helpers;
 using StremoCloud.Shared.Response;
 
@@ -17,7 +18,7 @@ public class SignInCommand : IRequest<GenericResponse<LoginResponse>>
     public string Password { get; set; }
 }
 
-public class SignInCommandHandler(IGenericRepository<User> repository, ITokenHelper tokenHelper)
+public class SignInCommandHandler(IStremoUnitOfWork unitOfWork, ITokenHelper tokenHelper)
     : IRequestHandler<SignInCommand, GenericResponse<LoginResponse>>
 {
     
@@ -30,7 +31,7 @@ public class SignInCommandHandler(IGenericRepository<User> repository, ITokenHel
         };
         
         request.Email = request.Email.Trim();
-        var user = await repository.GetByEmailAsync(request.Email);
+        var user = await unitOfWork.Repository<User>().GetByEmailAsync(request.Email);
         if (user == null)
         {
             response.Message = "Email Not Found. Please try again.";
