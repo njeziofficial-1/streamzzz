@@ -8,7 +8,6 @@ public record ProfileSetupCommand(
         string FirstName,
         string LastName,
         string PhoneNumber
-        //DateTime CreatedOn
         ) : IRequest<bool>;
 
 public class ProfileSetupCommandValidator : AbstractValidator<ProfileSetupCommand>
