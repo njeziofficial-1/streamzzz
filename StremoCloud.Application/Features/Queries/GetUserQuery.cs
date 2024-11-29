@@ -12,7 +12,7 @@ public class GetUserQueryHandler(IStremoUnitOfWork unitOfWork) : IRequestHandler
 {
     public async Task<GenericResponse<List<UserResponse>>> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        var userCollectionResponse = unitOfWork.Repository<SignUp>().GetList()
+        var userCollectionResponse = unitOfWork.Repository<User>().GetList()
             .Select(x => new UserResponse
             {
                 FirstName = x.FirstName,
