@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StremoCloud.Application.Features.Command.Create;
@@ -7,31 +8,29 @@ namespace StremoCloud.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OtpController : ControllerBase
+    //[Authorize]
+    public class OtpController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public OtpController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         [HttpPost("generate")]
         public async Task<IActionResult> GenerateOtp([FromBody] GenerateOtpCommand command)
         {
-            var result = await _mediator.Send(command);
-            return Ok(new { Otp = result });
+            var result = await mediator.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
         }
 
         [HttpPost("validate")]
         public async Task<IActionResult> ValidateOtp([FromBody] ValidateOtpCommand command)
         {
-            var isValid = await _mediator.Send(command);
-            if (isValid)
+            var response = await mediator.Send(command);
+            if (response.IsSuccess)
             {
-                return Ok("OTP is valid.");
+                return Ok(response);
             }
-            return BadRequest("Invalid or expired OTP.");
+            return BadRequest(response.Message);
         }
     }
 }

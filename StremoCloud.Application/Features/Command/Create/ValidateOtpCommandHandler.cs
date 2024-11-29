@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using StremoCloud.Domain.Interface;
+using StremoCloud.Shared.Response;
 
 namespace StremoCloud.Application.Features.Command.Create;
 
-public class ValidateOtpCommandHandler : IRequestHandler<ValidateOtpCommand, bool>
+public class ValidateOtpCommandHandler : IRequestHandler<ValidateOtpCommand, GenericResponse<bool>>
 {
     private readonly IOtpService _otpService;
 
@@ -12,8 +13,15 @@ public class ValidateOtpCommandHandler : IRequestHandler<ValidateOtpCommand, boo
         _otpService = otpService;
     }
 
-    public async Task<bool> Handle(ValidateOtpCommand request, CancellationToken cancellationToken)
+    public async Task<GenericResponse<bool>> Handle(ValidateOtpCommand request, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(_otpService.ValidateOtp(request.Email, request.Otp));
+        var validateTupleResponse = await Task.FromResult(_otpService.ValidateOtp(request.Email, request.Otp));
+        bool isSuccess = validateTupleResponse.Item1;
+        return new GenericResponse<bool>
+        {
+            Data = isSuccess,
+            IsSuccess = isSuccess,
+            Message = validateTupleResponse.Item2
+        };
     }
 }
