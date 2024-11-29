@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using Microsoft.AspNetCore.Builder;
 using StremoCloud.Domain.Entities;
+using StremoCloud.Infrastructure.Repositories;
 
 namespace StremoCloud.Application.Extensions;
 
@@ -26,6 +27,8 @@ public static class ServiceExtensions
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ISecurityHelper, SecurityHelper>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IProfileService, ProfileService>();
+        services.AddScoped<IProfileRepository, ProfileRepository>();
         services.AddScoped<ITokenHelper, TokenHelper>();
         services.AddScoped<IDataContext>(x =>
         {

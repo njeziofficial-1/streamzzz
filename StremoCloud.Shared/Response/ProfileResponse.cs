@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
-using StremoCloud.Domain.Common;
 
-namespace StremoCloud.Domain.Entities;
+namespace StremoCloud.Shared.Response;
 
-public partial class Profile : Entity
+public class ProfileResponse
 {
     public IFormFile? Image { get; set; }
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
-    public string PhoneNumber {  get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
 }

@@ -15,7 +15,7 @@ namespace StremoCloud.Infrastructure.Constant
             public const string SignUp = "SignUp";
             public const string Dashboard = "Dashboard";
             public const string ResetPassword = "ResetPassword";
-            public const string ProfileSetup = "ProfileSetup";
+            public const string Profile = "Profile";
             public const string OrderDetail = "OrderDetail";
         }
 

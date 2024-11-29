@@ -1,5 +1,7 @@
+using CloudinaryDotNet;
 using Serilog;
 using StremoCloud.Application.Extensions;
+using StremoCloud.Infrastructure.Options;
 using StremoCloud.Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,14 @@ builder.Services.AddSwaggerGen();
 var configuration = builder.Configuration;
 builder.Services.AddApplicationLayer(configuration);
 
+var cloudinaryConfig = configuration.GetSection("Cloudinary").Get<CloudinarySettings>();
+
+var cloudinary = new Cloudinary(new Account(
+    cloudinaryConfig.CloudName,
+    cloudinaryConfig.ApiKey,
+    cloudinaryConfig.ApiSecret));
+
+builder.Services.AddSingleton(cloudinary);
 
 //login to serilog
 builder.Host.UseSerilog((context, configuration) =>
