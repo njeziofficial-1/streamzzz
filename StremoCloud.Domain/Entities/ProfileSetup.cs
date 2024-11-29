@@ -2,7 +2,7 @@
 
 namespace StremoCloud.Domain.Entities;
 
-public partial class ProfileSetup
+public partial class Profile
 {
     public IFormFile? Image { get; set; }
     public string FirstName { get; set; } = string.Empty;
