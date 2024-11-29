@@ -5,7 +5,7 @@ namespace StremoCloud.Application.Services;
 
 public class OtpService : IOtpService
 {
-    private readonly Dictionary<string, OtpRecord> _otpStore = new();
+    private readonly Dictionary<string, OtpRecord> _otpStore = [];
 
     public async Task<string> GenerateOtpAsync(string email)
     {
