@@ -42,27 +42,27 @@ public static class ServiceExtensions
         services.AddScoped<IOtpService, OtpService>();
     }
 
-    public static async void DatabaseSeederExtension(this IApplicationBuilder app, IConfiguration configuration)
+    public static void DatabaseSeederExtension(this IApplicationBuilder app, IConfiguration configuration)
     {
         using var serviceScope = app.ApplicationServices
             .GetRequiredService<IServiceScopeFactory>()
             .CreateScope();
 
         var unitOfWork = serviceScope.ServiceProvider.GetRequiredService<IStremoUnitOfWork>();
-        var users = unitOfWork.Repository<SignUp>().GetList();
+        var users = unitOfWork.Repository<User>().GetList();
         if (!users.Any())
         {
-            var signUp = new SignUp
+            var user = new User
             {
                 FirstName = configuration["DefaultUser:FirstName"],
                 LastName = configuration["DefaultUser:LastName"],
                 PhoneNumber = configuration["DefaultUser:PhoneNumber"],
                 Email = configuration["DefaultUser:Email"],
                 Address = configuration["DefaultUser:Address"],
-                Password = configuration["DefaultUser:Password"]
+                Password = configuration["DefaultUser:Password"].GenerateHash()
             };
 
-            unitOfWork.Repository<SignUp>().CreateAsync(signUp).Wait();
+            unitOfWork.Repository<User>().CreateAsync(user).Wait();
         }
 
     }

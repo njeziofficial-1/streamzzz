@@ -23,12 +23,13 @@ public class SignUpCommandHandler(IStremoUnitOfWork unitOfWork)
 {
     public async Task<GenericResponse<string>> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
-        var existingUser = await unitOfWork.Repository<SignUpCommand>().FirstOrDefaultAsync(x => x.Email.ToLower() == request.Email.ToLower());
+        var existingUser = await unitOfWork.Repository<User>().FirstOrDefaultAsync(x => x.Email.ToLower() == request.Email.ToLower() || x.PhoneNumber == request.PhoneNumber);
 
         string message;
         if (existingUser != null)
         {
-            message = $"User with email: {request.Email} already exists";
+            string duplicateField = existingUser.Email == request.Email ? $"email: {request.Email}" : $"phone number: {request.PhoneNumber}";
+            message = $"User with {duplicateField} already exists";
             return new GenericResponse<string>
             {
                 Data = message,
@@ -37,16 +38,19 @@ public class SignUpCommandHandler(IStremoUnitOfWork unitOfWork)
             };
         }
 
-        var newUser = new SignUp
+        var now = DateTime.Now;
+        var newUser = new User
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
             Email = request.Email,
             PhoneNumber = request.PhoneNumber,
             Address = request.Address,
-            Password = request.Password.GenerateHash()
+            Password = request.Password.GenerateHash(),
+            CreatedOn = now
         };
-        await unitOfWork.Repository<SignUp>().CreateAsync(newUser);
+
+        await unitOfWork.Repository<User>().CreateAsync(newUser);
 
         message = "User created successfully.";
         return new GenericResponse<string>
