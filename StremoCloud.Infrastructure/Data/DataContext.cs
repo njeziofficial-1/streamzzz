@@ -2,22 +2,8 @@
 using MongoDB.Driver;
 namespace StremoCloud.Infrastructure.Data;
 
-public class DataContext : IDataContext
+public class DataContext(IMongoDatabase database) : IDataContext
 {
-    private readonly IMongoDatabase _database;
-    //public DataContext(IConfiguration configuration, IMongoDatabase database)
-    public DataContext(IMongoDatabase database)
-    {
-        _database = database;
-        /*
-        var client = new MongoClient(configuration["MongoDbOptions:ConnectionString"]);
-        database = client.GetDatabase(configuration["MongoDbOptions:DatabaseName"]);
-        */
-    }
-
     public IMongoCollection<T> GetCollection<T>(string name)
-    {
-        return _database.GetCollection<T>(name);
-    }
-
+        => database.GetCollection<T>(name);
 }

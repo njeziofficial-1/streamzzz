@@ -11,6 +11,8 @@ using StremoCloud.Domain.Interface;
 using StremoCloud.Infrastructure.Data.UnitOfWork;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using Microsoft.AspNetCore.Builder;
+using StremoCloud.Domain.Entities;
 
 namespace StremoCloud.Application.Extensions;
 
@@ -35,5 +37,30 @@ public static class ServiceExtensions
         services.AddScoped<IStremoUnitOfWork, StremoUnitOfWork>();
         services.AddValidatorsFromAssemblyContaining<ValidateOtpCommandValidator>();
         services.AddScoped<IOtpService, OtpService>();
+    }
+
+    public static async void DatabaseSeederExtension(this IApplicationBuilder app, IConfiguration configuration)
+    {
+        using var serviceScope = app.ApplicationServices
+            .GetRequiredService<IServiceScopeFactory>()
+            .CreateScope();
+
+        var unitOfWork = serviceScope.ServiceProvider.GetRequiredService<IStremoUnitOfWork>();
+        var users = unitOfWork.Repository<SignUp>().GetList();
+        if (!users.Any())
+        {
+            var signUp = new SignUp
+            {
+                FirstName = configuration["DefaultUser:FirstName"],
+                LastName = configuration["DefaultUser:LastName"],
+                PhoneNumber = configuration["DefaultUser:PhoneNumber"],
+                Email = configuration["DefaultUser:Email"],
+                Address = configuration["DefaultUser:Address"],
+                Password = configuration["DefaultUser:Password"]
+            };
+
+            unitOfWork.Repository<SignUp>().CreateAsync(signUp).Wait();
+        }
+
     }
 }

@@ -10,7 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApplicationLayer(builder.Configuration);
+var configuration = builder.Configuration;
+builder.Services.AddApplicationLayer(configuration);
 
 
 //login to serilog
@@ -52,5 +53,5 @@ app.UseCors(x => x
               .AllowCredentials());
 
 app.MapControllers();
-
+app.DatabaseSeederExtension(configuration);
 app.Run();
