@@ -19,7 +19,7 @@ public class TokenHelper(IConfiguration configuration) : ITokenHelper
             audience: configuration["JwtSettings:Audience"],
             claims: claims,
             notBefore: DateTime.Now,
-            expires: DateTime.Now.AddMinutes(60),
+            expires: DateTime.Now.AddMinutes(5),
             signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
         );
         return new JwtSecurityTokenHandler().WriteToken(jwtToken);
