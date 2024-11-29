@@ -2,6 +2,7 @@ using MediatR;
 using StremoCloud.Application.Services;
 using StremoCloud.Domain.Entities;
 using StremoCloud.Infrastructure.Data;
+using StremoCloud.Infrastructure.Data.UnitOfWork;
 using StremoCloud.Shared.Helpers;
 
 namespace StremoCloud.Application.Features.Command.Create;
@@ -11,13 +12,13 @@ public class ForgotPasswordCommand : IRequest<bool>
     public string Email { get; set; }
 }
 
-public class ForgotPasswordCommandHandler (IEmailService emailService, IGenericRepository<User> userRepository, IGenericRepository<Verification> verificationRepository,ISecurityHelper securityHelper,  ITokenHelper tokenHelper)
+public class ForgotPasswordCommandHandler (IEmailService emailService, IStremoUnitOfWork unitOfWork, IGenericRepository<Verification> verificationRepository,ISecurityHelper securityHelper,  ITokenHelper tokenHelper)
     : IRequestHandler<ForgotPasswordCommand, bool>
 {
     public async Task<bool> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
     {
         request.Email = request.Email.Trim();
-        var user = await userRepository.GetByEmailAsync(request.Email);
+        var user = await unitOfWork.Repository<User>().GetByEmailAsync(request.Email);
         if (user != null)
         {
             var uniqueString = $"{StringHelper.GenerateRandomString(6)}|{user.Email}";

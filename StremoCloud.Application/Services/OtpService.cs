@@ -14,7 +14,7 @@ public class OtpService : IOtpService
         {
             Otp = otp,
             Email = email,
-            Expiry = DateTime.UtcNow.AddMinutes(5) // 5 minutes validity
+            Expiry = DateTime.Now.AddMinutes(5) // 5 minutes validity
         };
 
         // Simulate async operation
