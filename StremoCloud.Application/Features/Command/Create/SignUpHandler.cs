@@ -72,7 +72,7 @@ public class SignUpCommandValidator : AbstractValidator<SignUpCommand>
             .NotEmpty()
             .NotNull()
             .MaximumLength(20)
-            .Matches("^[0-9]*$").WithMessage("{PhoneNumber} can only contain digits, please pass valid phonenumber.");//Accept only numbers from 0-9.
+            .Matches("^[0-9]*$").WithMessage("{PhoneNumber} can only contain digits, please pass valid phone number.");//Accept only numbers from 0-9.
         RuleFor(p => p.Email)
             .NotEmpty()
             .NotNull()
