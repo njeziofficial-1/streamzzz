@@ -12,7 +12,8 @@ public class GenerateOtpCommandHandler(IOtpService otpService, IEmailService ema
     public async Task<GenericResponse<string>> Handle(GenerateOtpCommand request, CancellationToken cancellationToken)
     {
         // Generate OTP using the service
-        var user = await unitOfWork.Repository<User>().GetByEmailAsync(request.Email);
+        string email = request.Email.Trim().ToLower();
+        var user = await unitOfWork.Repository<User>().GetByEmailAsync(email);
         if (user == null)
         {
             return new GenericResponse<string>
@@ -21,7 +22,7 @@ public class GenerateOtpCommandHandler(IOtpService otpService, IEmailService ema
                 Message = $"User with email {request.Email} does not exist"
             };
         }
-        var otp = otpService.GenerateAndCacheOtp(request.Email);
+        var otp = otpService.GenerateAndCacheOtp(email);
         string subject = "OTP Verification";
         string message = $"Your Stremo cloud OTP is {otp}. <br/> Please use this in verification immediately, as it will expire in 5 minutes. <br>";
         //Send email

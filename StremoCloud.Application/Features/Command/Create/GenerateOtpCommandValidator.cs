@@ -17,8 +17,6 @@ public class ValidateOtpCommandValidator : AbstractValidator<ValidateOtpCommand>
 
         RuleFor(x => x.Otp)
             .NotEmpty().WithMessage("OTP is required.")
-            .Length(6).WithMessage("OTP must be 6 digits.")
-            .Must((cmd, otp) => _otpService.IsOtpValid(cmd.Email, otp))
-            .WithMessage("Invalid or expired OTP.");
+            .Length(6).WithMessage("OTP must be 6 digits.");
     }
 }
