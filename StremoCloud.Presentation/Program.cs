@@ -14,7 +14,13 @@ builder.Services.AddMemoryCache();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    // Add the XML comments to Swagger
+    var xmlFile = Path.Combine(AppContext.BaseDirectory, "StremoCloud.xml");
+    options.IncludeXmlComments(xmlFile);
+});
+
 var configuration = builder.Configuration;
 builder.Services.AddApplicationLayer(configuration);
 
