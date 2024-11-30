@@ -10,5 +10,4 @@ public class Order : Entity
     public OrderStatusEnum Status { get; set; }
     public bool IsIncomingCall { get; set; }
     public OrderDecisionEnum Action { get; set; }
-
 }
