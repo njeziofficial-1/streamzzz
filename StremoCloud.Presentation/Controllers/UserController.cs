@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StremoCloud.Application.Features.Command.Create;
+using StremoCloud.Application.Features.Command.Delete;
 using StremoCloud.Application.Features.Queries;
 
 namespace StremoCloud.Presentation.Controllers;
@@ -26,6 +27,13 @@ public class UserController(IMediator mediator) : ControllerBase
 
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordCommand command)
+    {
+        var response = await mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpDelete("logout")]
+    public async Task<IActionResult> LogoutAsync(LogoutCommand command)
     {
         var response = await mediator.Send(command);
         return Ok(response);
