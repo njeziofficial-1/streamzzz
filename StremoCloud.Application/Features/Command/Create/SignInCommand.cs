@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using StremoCloud.Domain.Entities;
 using StremoCloud.Infrastructure.Data;
 using StremoCloud.Infrastructure.Data.UnitOfWork;
@@ -18,7 +19,7 @@ public class SignInCommand : IRequest<GenericResponse<LoginResponse>>
     public string Password { get; set; }
 }
 
-public class SignInCommandHandler(IStremoUnitOfWork unitOfWork, ITokenHelper tokenHelper)
+public class SignInCommandHandler(IConfiguration configuration, IStremoUnitOfWork unitOfWork, ITokenHelper tokenHelper)
     : IRequestHandler<SignInCommand, GenericResponse<LoginResponse>>
 {
     
@@ -53,7 +54,23 @@ public class SignInCommandHandler(IStremoUnitOfWork unitOfWork, ITokenHelper tok
         };
         
         tokenObject.AccessToken = tokenHelper.GenerateAccessToken(claims);
-        tokenObject.RefreshToken = tokenHelper.GenerateRefreshToken();
+        var oldRefreshToken = await unitOfWork.Repository<RefreshToken>().FirstOrDefaultAsync(x => x.UserId == user.Id);
+        if (oldRefreshToken != null)
+        {
+            await unitOfWork.Repository<RefreshToken>().DeleteAsync(oldRefreshToken.Id);
+        }
+        tokenObject.RefreshToken = tokenHelper.GenerateRefreshToken();      
+        var expiresInDays = Convert.ToInt32(configuration["RefreshToken:ExpiresIn"]);
+        var now = DateTime.UtcNow;
+        var newRefreshToken = new RefreshToken
+        {
+            UserId = user.Id,
+            DateCreated = now,
+            DateExpires = now.AddDays(expiresInDays),
+            RefreshTokenValue = tokenObject.RefreshToken
+        };
+
+        await unitOfWork.Repository<RefreshToken>().CreateAsync(newRefreshToken);
         response.IsSuccess = true;
         response.Message = "Login Successful";
         response.Data = tokenObject;

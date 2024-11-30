@@ -1,8 +1,11 @@
 using CloudinaryDotNet;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Serilog;
 using StremoCloud.Application.Extensions;
 using StremoCloud.Infrastructure.Options;
 using StremoCloud.Presentation.Middleware;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,17 +33,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration);
 });
 
-//Cors
-//builder.Services.AddCors(options => {
-//    options.AddPolicy("EnabledCQRS",
-//        options => { options
-//            .AllowAnyHeader()
-//            .AllowAnyMethod();
-//        });
-//});
-
 builder.Services.AddCors();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -54,8 +47,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseMiddleware<ErrorHandlerMiddleware>();
-
-//app.UseCors("EnabledCORS");
 app.UseCors(x => x
               .AllowAnyMethod()
               .AllowAnyHeader()

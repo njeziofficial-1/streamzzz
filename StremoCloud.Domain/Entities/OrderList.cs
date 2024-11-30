@@ -3,7 +3,7 @@ using StremoCloud.Domain.Enum;
 
 namespace StremoCloud.Domain.Entities;
 
-public class Order : Entity
+public class OrderList : Entity
 {
     public string CustomerName { get; set; }
     public string Address { get; set; }
