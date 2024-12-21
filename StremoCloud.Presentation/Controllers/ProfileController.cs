@@ -16,12 +16,21 @@ namespace StremoCloud.Presentation.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost("setUp")]
+
+        /// <summary>
+        /// Creates a new profile for a user.
+        /// </summary>
+        /// <param name="command">The command containing profile data to be created, sent via multipart/form-data.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
+        /// <remarks>
+        /// This endpoint accepts a multipart/form-data request to create a user profile.
+        /// </remarks>
+        [HttpPost("Create")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> ProfileSetUp([FromForm] ProfileSetupCommand command)
+        public async Task<IActionResult> CreateProfile([FromForm] AddProfileCommand command)
         {
-             var result = await _mediator.Send(command);
-             return result ? Ok("Profile setup successful.") : BadRequest("Profile setup failed.");
+            var response = await _mediator.Send(command);
+            return Ok();
         }
     }
 }

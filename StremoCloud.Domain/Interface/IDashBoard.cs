@@ -10,8 +10,7 @@ namespace StremoCloud.Domain.Interface
     {
         Task<IEnumerable<Order>> GetOrdersAsync(); 
         Task<Order> GetOrderAsync(string id);
-        Task<Order> CreateOrder(Order order);
-        
+        Task<Order> CreateOrder(Order order);  
     }
 
     public class Order

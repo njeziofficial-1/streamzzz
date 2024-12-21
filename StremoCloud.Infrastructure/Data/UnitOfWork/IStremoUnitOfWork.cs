@@ -1,4 +1,5 @@
 ﻿
+
 namespace StremoCloud.Infrastructure.Data.UnitOfWork;
 
 public interface IStremoUnitOfWork
