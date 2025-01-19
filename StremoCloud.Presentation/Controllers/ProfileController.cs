@@ -30,7 +30,11 @@ namespace StremoCloud.Presentation.Controllers
         public async Task<IActionResult> CreateProfile([FromForm] AddProfileCommand command)
         {
             var response = await _mediator.Send(command);
-            return Ok();
+            return Ok(new
+            {
+                Message = "Profile created successfully!",
+                Data = response
+            });
         }
     }
 }

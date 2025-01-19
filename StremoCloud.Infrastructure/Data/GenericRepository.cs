@@ -27,7 +27,7 @@ public class GenericRepository<T> : IGenericRepository<T>
     {
         return await _collection.Find(Builders<T>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
     }
-
+     
     public IEnumerable<T> AsQueryable()
     {
         return _context.GetCollection<T>(typeof(T).Name).Find(_ => true).ToEnumerable();

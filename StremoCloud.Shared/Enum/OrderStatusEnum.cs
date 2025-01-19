@@ -1,4 +1,4 @@
-﻿namespace StremoCloud.Domain.Enum;
+﻿namespace StremoCloud.Shared.Enum;
 
 public enum OrderStatusEnum
 {

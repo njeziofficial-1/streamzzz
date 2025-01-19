@@ -50,6 +50,8 @@ public class SignInCommandHandler(IConfiguration configuration, IStremoUnitOfWor
         {
             new(ClaimTypes.Email, user.Email),
             new(ClaimTypes.Name, user.FirstName),
+            new("LastName", user.LastName),
+            new("Address", user.Address),
             new(ClaimTypes.Sid, user.Id)
         };
         

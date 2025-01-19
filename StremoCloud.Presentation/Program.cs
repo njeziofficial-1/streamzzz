@@ -6,6 +6,7 @@ using StremoCloud.Infrastructure.Options;
 using StremoCloud.Presentation.Middleware;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using StremoCloud.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +24,9 @@ builder.Services.AddSwaggerGen(options =>
 
 var configuration = builder.Configuration;
 builder.Services.AddApplicationLayer(configuration);
+builder.Services.AddSingleton<ICloudinaryService, CloudinaryService>();
 
-var cloudinaryConfig = configuration.GetSection("Cloudinary").Get<CloudinarySettings>();
+var cloudinaryConfig = configuration.GetSection("CloudinarySettings").Get<CloudinarySettings>();
 
 var cloudinary = new Cloudinary(new Account(
     cloudinaryConfig.CloudName,

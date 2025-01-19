@@ -12,6 +12,18 @@ public class CloudinaryService : ICloudinaryService
 
     public CloudinaryService(IOptions<CloudinarySettings> cloudinarySettings)
     {
+        if (cloudinarySettings == null || cloudinarySettings.Value == null)
+        {
+            throw new ArgumentNullException(nameof(cloudinarySettings), "Cloudinary settings cannot be null.");
+        }
+
+        if (string.IsNullOrWhiteSpace(cloudinarySettings.Value.CloudName) ||
+            string.IsNullOrWhiteSpace(cloudinarySettings.Value.ApiKey) ||
+            string.IsNullOrWhiteSpace(cloudinarySettings.Value.ApiSecret))
+        {
+            throw new Exception("CloudinarySettings is not configured properly.");
+        }
+
         var account = new Account(
             cloudinarySettings.Value.CloudName,
             cloudinarySettings.Value.ApiKey,
@@ -22,16 +34,29 @@ public class CloudinaryService : ICloudinaryService
 
     public async Task<string> UploadImageAsync(IFormFile image)
     {
-        using var stream = new MemoryStream();
-        await image.CopyToAsync(stream);
-        var uploadParams = new ImageUploadParams
+        if (image == null)
         {
-            File = new FileDescription(image.FileName, stream),
-            Folder = "profile_images"
-        };
+            throw new ArgumentException("Image cannot be null!");
+        }
 
-        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-        return uploadResult.SecureUrl.ToString();
+        using (var stream = image.OpenReadStream())
+        {
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(image.FileName, stream),
+                Folder = "StremoCloud_ProfileSetUp"
+
+            };
+
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+            if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                throw new Exception($"Image upload failed: {uploadResult.Error?.Message}");
+            }
+
+            return uploadResult.Url.ToString();
+        }
     }
 }
 

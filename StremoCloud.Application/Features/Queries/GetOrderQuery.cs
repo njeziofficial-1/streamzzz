@@ -25,7 +25,7 @@ public class GetOrderQueryHandler(IStremoUnitOfWork unitOfWork) : IRequestHandle
                 Id = x.Id,
                 CustomerName = x.CustomerName,
                 Address = x.Address,
-                OrderStatus = x.Status.ToString()
+               // OrderRenderStatus = x.Status.ToString(),
             }).ToList();
 
         string message = paginatedOrders.Any() ? "Orders returned successfully" : "No data response for the request";

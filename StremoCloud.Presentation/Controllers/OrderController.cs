@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StremoCloud.Application.Features.Command.Create;
 using StremoCloud.Application.Features.Queries;
 
 namespace StremoCloud.Presentation.Controllers;
@@ -19,4 +20,8 @@ public class OrderController(IMediator mediator) : ControllerBase
     [HttpGet("get-all-order")]
     public async Task<IActionResult> GetAllOrder()
         => Ok(await mediator.Send(new GetOrderQuery()));
+
+    [HttpPost("create-order")]
+    public async Task<IActionResult> CreateOrder(CreateOrderCommand request)
+        => Ok(await mediator.Send(request));
 }

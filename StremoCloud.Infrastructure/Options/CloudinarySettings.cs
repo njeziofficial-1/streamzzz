@@ -2,8 +2,8 @@
 
 public class CloudinarySettings
 {
-    public string CloudName { get; set; } = string.Empty;
-    public string ApiKey { get; set; } = string.Empty;
-    public string ApiSecret { get; set; } = string.Empty;
+    public string CloudName { get; set; } = "dfygmg6rl";
+    public string ApiKey { get; set; } = "263296367442226";
+    public string ApiSecret { get; set; } = "h7y6IHj4-6_G-myJyzdwk6Xied0";
 }
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,6 +7,7 @@
     <!--<UserSecretsId>cb387979-63c2-4566-93b1-a8e4c217572e</UserSecretsId>-->
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <DocumentationFile>bin\Debug\net8.0\StremoCloud.xml</DocumentationFile>
+	  <UserSecretsId>ee79fd3e-5259-45e6-91de-3460b8052c3c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -12,34 +12,54 @@ public class AddProfileCommandHandler(IConfiguration configuration, IStremoUnitO
 {
     public async Task<GenericResponse<ProfileResponse>> Handle(AddProfileCommand request, CancellationToken cancellationToken)
     {
-        var response = new GenericResponse<ProfileResponse>();
-
-        // Upload the profile image to Cloudinary
-        string imageUrl = null;
-        if (request.Image != null)
+        var response = new GenericResponse<ProfileResponse>
         {
-            imageUrl = await cloudinaryService.UploadImageAsync(request.Image);
-        }
-
-        // Create new profile model
-        var newProfile = new Profile
-        { 
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            PhoneNumber = request.PhoneNumber,
-            ImageUrl = imageUrl // Store image URL if uploaded
+            Message = "Error in updating user profile",
+            IsSuccess = false
         };
 
-        // Save the profile in the database
-        await unitOfWork.Repository<Profile>().CreateAsync(newProfile);
+        try
+        {
+            // Check if the image is provided
+            string imageUrl = string.Empty;
+            if (request.Image != null)
+            {
+                // Upload the profile image to Cloudinary
+                imageUrl = await cloudinaryService.UploadImageAsync(request.Image);
 
-        // Commit the changes to the database
-        //await unitOfWork.CommitAsync();
+                // Handle upload failure
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    response.Message = "Failed to upload the profile image.";
+                    return response;
+                }
+            }
 
-        // Return success response with the newly created profile ID
-        response.IsSuccess = true;
-        response.Message = "Profile created successfully.";
-        //response.Data = newProfile.ImageUrl.FileName;
+            // Fetch user by PhoneNumber
+            var user = await unitOfWork.Repository<User>().FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber);
+            if (user == null)
+            {
+                response.Message = "User not found.";
+                return response;
+            }
+
+            // Update user's image URL
+            user.ImageUrl = imageUrl;
+            await unitOfWork.Repository<User>().UpdateAsync(user.Id, user);
+
+            // Return success response
+            response.IsSuccess = true;
+            response.Message = "Profile updated successfully.";
+            response.Data = new ProfileResponse
+            {
+                ImageUrl = user.ImageUrl
+            };
+        }
+        catch (Exception ex)
+        {
+            // Log exception (optional: inject ILogger for logging)
+            response.Message = $"An error occurred: {ex.Message}";
+        }
 
         return response;
     }
