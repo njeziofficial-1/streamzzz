@@ -8,13 +8,10 @@
 
   <ItemGroup>
     <Compile Remove="Features\Command\GetAll\**" />
-    <Compile Remove="Features\Command\Update\**" />
     <Compile Remove="Features\Handler\**" />
     <EmbeddedResource Remove="Features\Command\GetAll\**" />
-    <EmbeddedResource Remove="Features\Command\Update\**" />
     <EmbeddedResource Remove="Features\Handler\**" />
     <None Remove="Features\Command\GetAll\**" />
-    <None Remove="Features\Command\Update\**" />
     <None Remove="Features\Handler\**" />
   </ItemGroup>
 

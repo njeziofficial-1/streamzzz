@@ -7,7 +7,7 @@ public class Entity
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; } 
+    public string Id { get; set; } = string.Empty;
     public DateTime CreatedOn { get; set; }
     public string? CreatedBy { get; set; } 
     public DateTime? ModifiedOn { get; set; }
